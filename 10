@@ -1,0 +1,181 @@
+#include<iostream>
+#include<fstream>
+#include<stdio.h>
+Using namespace std;
+Typedef struct student
+{
+ Int roll;
+ Char a,name[20],add[30];
+}stud;
+Void create();
+Void display();
+Void insert();
+Void search(int key);
+Void delete1(int key);
+Void modify(int key);
+Int main()
+{int ch,x;
+Do
+{
+
+Cout<<”\n\t***MENU***\n1.Accept\n2.Display\n3.Insert\n4.Search\n5.Delete\n6.Modify\n7.
+Exit\nEnter your choice=”;
+ Cin>>ch;
+ Switch(ch)
+ {
+ Case 1:create();
+ Break;
+ Case 2:display();
+ Break;
+ Case 3:insert();
+ Break;
+ Case 4: cout<<”Enter roll no to search=”;
+ Cin>>x;
+ Search(x);
+ Break;
+ Case 5:cout<<”Enter roll no to delete=”;
+ Cin>>x;
+ Delete1(x);
+ Break;
+ Case 6:cout<<”Enter roll no to modify=”;
+ Cin>>x;
+ Modify(x);
+ Break;
+ }
+
+}while(ch!=7);
+Return 0;
+}
+Ifstream fin;
+Ofstream fout;
+Fstream fm;
+Int n;
+Char fname[20];
+Void create()
+{int I;
+ Stud s;
+ Cout<<”Enter name of the file=”;
+ Cin>>fname;
+ Fm.open(fname,ios::out);
+ Cout<<”\nEnter no. of records:=”;
+ Cin>>n;
+ For(i=0;i<n;i++)
+ {
+ Cout<<”Enter roll no=”;
+ Cin>>s.roll;
+ Cout<<”Enter name=”;
+ Cin>>s.name;
+ Cout<<”Enter division=”;
+ Cin>>s.a;
+ Cout<<”Enter address=”;
+ Cin>>s.add;
+ Fm.write((char*)&s,sizeof(s));
+
+ }
+Fm.close();
+}//create
+Void display()
+{int I;
+Stud s;
+ Fin.open(fname);
+ Cout<<”\nROLL NO\tNAME\tDIV\tADDRESS”;
+ // while(!fin.eof())
+ For(i=0;i<n;i++)
+ {
+ Fin.read((char*)&s,sizeof(s));
+ Cout<<”\n”<<s.roll<<”\t”<<s.name<<”\t”<<s.a<<”\t”<<s.add;
+ }
+Fin.close();
+}//display
+Void insert()
+{stud s;
+ Fout.open(fname,ios::app);
+ Cout<<”Enter roll no=”;
+ Cin>>s.roll;
+ Cout<<”Enter name=”;
+ Cin>>s.name;
+ Cout<<”Enter division=”;
+ Cin>>s.a;
+ Cout<<”Enter address=”;
+ Cin>>s.add;
+ Fout.write((char*)&s,sizeof(s));
+ N++;
+ Fout.close();
+}
+Void search(int key)
+{ stud s;
+Int flag=0,I;
+ Fin.open(fname);
+ For(i=0;i<n;i++)
+ {
+ Fin.read((char *)&s,sizeof(s));
+ If(s.roll==key)
+ {
+ Cout<<”\nRecord is present their corresponding details are:\nRoll no=”;
+ Cout<<s.roll<<”\nName=”<<s.name<<”\nDivision=”<<s.a<<”\nAddress=”<<s.add;
+ Flag=1;
+ }
+ }
+ If(flag==0)
+ Cout<<”\nRoll no.= “<<key<<” is not present in the record”;
+ Fin.close();
+}
+Void delete1(int key)
+{ stud s;
+Int flag=0,I;
+ Fin.open(fname);
+ Fout.open(“temp.txt”,ios::out);
+ For(i=0;i<n;i++)
+ {
+ Fin.read((char *)&s,sizeof(s));
+ If(s.roll==key)
+ { cout<<”\nRecord deleted successfully”;
+ Flag=1;
+ }
+ Else
+ {
+ Fout.write((char *)&s,sizeof(s));
+ }
+ }
+ If(flag==0)
+ Cout<<”\nRoll no.= “<<key<<” is not present in the record”;
+ Else
+ n--;
+ fin.close();
+ fout.close();
+ remove(fname);
+ rename(“temp.txt”,fname);
+}
+Void modify(int key)
+{ stud s;
+Int flag=0,I;
+ Fin.open(fname);
+ Fout.open(“temp.txt”,ios::out);
+ For(i=0;i<n;i++)
+ {
+ Fin.read((char *)&s,sizeof(s));
+ If(s.roll==key)
+ {
+ Cout<<”Enter roll no=”;
+ Cin>>s.roll;
+ Cout<<”Enter name=”;
+ Cin>>s.name;
+ Cout<<”Enter division=”;
+ Cin>>s.a;
+ Cout<<”Enter address=”;
+ Cin>>s.add;
+ Fout.write((char*)&s,sizeof(s));
+ Flag=1;
+ }
+ Else
+ {
+ Fout.write((char *)&s,sizeof(s));
+ }
+ }
+ If(flag==0)
+ Cout<<”\nRoll no.= “<<key<<” is not present in the record”;
+ Fin.close();
+ Fout.close();
+ Remove(fname);
+ Rename(“temp.txt”,fname);
+}
